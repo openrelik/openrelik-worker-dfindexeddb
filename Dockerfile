@@ -37,8 +37,8 @@ RUN poetry install --no-interaction --no-ansi
 # Copy files needed to build
 COPY . ./
 
-# install dfindexeddb
-RUN pip install dfindexeddb --break-system-packages
+# install dfindexeddb and dfdatetime
+RUN pip install dfindexeddb dfdatetime --break-system-packages
 
 # Install the worker and set environment to use the correct python interpreter.
 RUN poetry install && rm -rf $POETRY_CACHE_DIR
