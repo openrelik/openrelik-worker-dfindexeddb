@@ -56,7 +56,7 @@ TASK_METADATA = {
 }
 
 INTERVAL_SECONDS = 2
-            
+
 
 @celery.task(bind=True, name=TASK_NAME, metadata=TASK_METADATA)
 def command(
@@ -156,17 +156,17 @@ def command(
             "-o",
             output_format
         ]
-        
+
         if subcommand == "db":
-            command_parts.extend([            
+            command_parts.extend([
                 "--format",
                 browser_type,
             ])
 
         # Run the command
         with (
-            open(stdout_file.path, "w") as stdout_fh,
-            open(stderr_file.path, "w") as stderr_fh
+            open(stdout_file.path, "w", encoding="utf-8") as stdout_fh,
+            open(stderr_file.path, "w", encoding="utf-8") as stderr_fh
         ):
             print(f'Executing {command_parts}')
             process = subprocess.Popen(command_parts, stdout=stdout_fh, stderr=stderr_fh)

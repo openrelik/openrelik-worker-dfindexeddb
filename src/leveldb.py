@@ -14,6 +14,7 @@
 
 import re
 import subprocess
+import time
 
 from openrelik_worker_common.file_utils import create_output_file
 from openrelik_worker_common.task_utils import create_task_result, get_input_files
@@ -54,6 +55,8 @@ TASK_METADATA = {
         }
     ],
 }
+
+INTERVAL_SECONDS = 2
 
 
 @celery.task(bind=True, name=TASK_NAME, metadata=TASK_METADATA)
@@ -100,9 +103,9 @@ def command(
         display_name = input_file.get("display_name")
         original_path = input_file.get("path")
         source_file_id = input_file.get("id")
-        for file_regex in definitions.LEVELDB_FILE_REGEX:
-            if re.search(definitions.LEVELDB_FILE_REGEX[file_regex], display_name):
-                subcommand = file_regex
+        for file_ext, file_regex in definitions.LEVELDB_FILE_REGEX.items():
+            if re.search(file_regex, display_name):
+                subcommand = file_ext
                 break
         else:
             print(f"Unsupported file type for {display_name}.")
@@ -128,7 +131,7 @@ def command(
             original_path=original_path,
             source_file_id=source_file_id
         )
-        command = [
+        command_parts = [
             base_command,
             subcommand,
             "-s",
@@ -141,14 +144,14 @@ def command(
 
         # Run the command
         with (
-            open(stdout_file.path, "w") as stdout_fh,
-            open(stderr_file.path, "w") as stderr_fh
+            open(stdout_file.path, "w", encoding="utf-8") as stdout_fh,
+            open(stderr_file.path, "w", encoding="utf-8") as stderr_fh
         ):
-            subprocess.Popen(
-                command,
-                stdout=stdout_fh,
-                stderr=stderr_fh
-            )
+            print(f'Executing {command_parts}')
+            process = subprocess.Popen(command_parts, stdout=stdout_fh, stderr=stderr_fh)
+            while process.poll() is None:
+                self.send_event("task-progress", data=None)
+                time.sleep(INTERVAL_SECONDS)
 
         output_files.append(stdout_file.to_dict())
         output_files.append(stderr_file.to_dict())
