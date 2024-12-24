@@ -14,6 +14,7 @@
 # limitations under the License.
 """Unit tests for OpenRelik leveldb task."""
 import os
+import pytest
 import unittest
 from unittest import mock
 
@@ -50,3 +51,6 @@ class LevelDBTest(unittest.TestCase):
             result.get()
         self.assertEqual(result.status, 'FAILURE')
 
+
+if __name__ == '__main__':
+    unittest.main()

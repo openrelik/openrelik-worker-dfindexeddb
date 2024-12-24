@@ -1,1 +1,1 @@
-# Openrelik worker for parsing IndexedDB and LevelDB files
+# Openrelik worker for parsing and analyzing IndexedDB and LevelDB files
