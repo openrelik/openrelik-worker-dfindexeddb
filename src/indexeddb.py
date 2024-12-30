@@ -113,7 +113,6 @@ def command(
         original_path = input_file.get("path")
         source_file_id = input_file.get("id")
         data_type = f"openrelik:dfindexeddb:{browser_type}:{output_format}"
-
         if browser_type == "chromium":
             for subcommand, value in definitions.CHROMIUM_FILE_REGEX.items():
                 if re.search(value, display_name):

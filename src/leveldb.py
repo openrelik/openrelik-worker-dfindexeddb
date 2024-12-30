@@ -147,7 +147,6 @@ def command(
             open(stdout_file.path, "w", encoding="utf-8") as stdout_fh,
             open(stderr_file.path, "w", encoding="utf-8") as stderr_fh
         ):
-            print(f'Executing {command_parts}')
             process = subprocess.Popen(command_parts, stdout=stdout_fh, stderr=stderr_fh)
             while process.poll() is None:
                 self.send_event("task-progress", data=None)
