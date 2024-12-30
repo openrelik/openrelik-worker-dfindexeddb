@@ -33,7 +33,7 @@ TASK_NAME = "openrelik-worker-dfindexeddb.tasks.indexeddb"
 TASK_METADATA = {
     "display_name": "dfindexeddb: indexeddb",
     "description": "Extracts IndexedDB records using dfindexeddb.",
-    # Configuration that will be rendered as a web for in the UI, and any data entered
+    # Configuration that will be rendered as a web form in the UI, and any data entered
     # by the user will be available to the task function when executing (task_config).
     "task_config": [
         {
