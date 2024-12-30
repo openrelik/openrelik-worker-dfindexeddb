@@ -14,13 +14,10 @@
 # limitations under the License.
 """Unit tests for OpenRelik leveldb task."""
 import os
-import pytest
 import tempfile
 import unittest
 from unittest import mock
 
-from openrelik_worker_common import file_utils
-from openrelik_worker_common.task_utils import encode_dict_to_base64
 
 with mock.patch.dict(os.environ, {'REDIS_URL': 'redis://'}, clear=True):
     from src.leveldb import command
