@@ -1,15 +1,20 @@
 [tool.poetry]
-name = "openrelik-worker-template"
+name = "openrelik-worker-dfindexeddb"
 version = "2024.11.27"
-description = "Description of the worker"
-authors = ["YOUR NAME <email@example.com>"]
+description = "Parse and analyze indexeddb/leveldb files."
+authors = ["sydp@google.com"]
 readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
-celery = {extras = ["redis"], version = "^5.4.0"}
+celery = { extras = ["redis"], version = "^5.4.0" }
 openrelik-worker-common = "^2024.11.27"
+dfindexeddb = {extras = ["plugins"], version = "^20241105"}
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-cov = "^5.0.0"
 
 [build-system]
 requires = ["poetry-core"]
