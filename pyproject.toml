@@ -10,7 +10,7 @@ package-mode = false
 python = "^3.10"
 celery = { extras = ["redis"], version = "^5.4.0" }
 openrelik-worker-common = "^2024.11.27"
-dfindexeddb = {extras = ["plugins"], version = "^20241105"}
+dfindexeddb = {extras = ["plugins"], version = "^20251109"}
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"
