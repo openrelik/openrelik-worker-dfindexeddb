@@ -1,21 +1,27 @@
-[tool.poetry]
+[project]
 name = "openrelik-worker-dfindexeddb"
-version = "2025.11.09"
+version = "2026.01.20"
 description = "Parse and analyze indexeddb/leveldb files."
-authors = ["sydp@google.com"]
+authors = [{ name = "sydp@google.com" }]
+requires-python = ">=3.11,<4.0"
 readme = "README.md"
-package-mode = false
 
-[tool.poetry.dependencies]
-python = ">=3.11,<4.0"
-celery = { extras = ["redis"], version = "^5.4.0" }
-openrelik-worker-common = ">=0.16.1"
-dfindexeddb = {extras = ["plugins"], version = "^20251109"}
+dependencies = [
+    "celery[redis]>=5.4.0,<6",
+    "openrelik-worker-common>=0.16.1",
+    "dfindexeddb[plugins]>=20251109,<20251110",
+]
 
-[tool.poetry.group.test.dependencies]
-pytest = "*"
-pytest-cov = "^5.0.0"
+[dependency-groups]
+test = [
+    "pytest",
+    "pytest-cov>=5.0.0,<6",
+]
+
+[tool.uv]
+package = false
+default-groups = ["test"]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.9.0,<0.10.0"]
+build-backend = "uv_build"
